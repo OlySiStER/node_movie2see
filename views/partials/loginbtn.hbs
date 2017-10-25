@@ -5,12 +5,25 @@
 </script> 
 
 {{# if login}}
-    <form action="/logout" method="get" onsubmit="return confirmLogout()">
+{{!-- <div class="row"> --}}
+    {{!-- <form action="/logout" method="get" onsubmit="return confirmLogout()"> --}}
         {{# if uname}} 
-            <span style="color: white;">Welcome : {{uname}}</span> &nbsp
+<div class="dropdown">
+  <button class="btn btn-outline-success my-2 my-sm-0 dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+   <i class="fa fa-user-o" aria-hidden="true"></i> Welcome : {{uname}} &nbsp
+  </button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <a class="dropdown-item" href="/myprofile">My profile</a>
+    {{!-- <a class="dropdown-item" href="#">Another action</a> --}}
+    <a class="dropdown-item" href="/logout" onclick="return confirmLogout()">Logout</a>
+  </div>
+</div>
+            {{!-- <span style="color: white;">Welcome : {{uname}}</span> &nbsp --}}
         {{/if}}
-    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Logout</button>
-    </form>
+    {{!-- <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Logout</button> --}}
+    {{!-- </form> --}}
+    
+    {{!-- </div> --}}
 {{else}}
-<button class="btn btn-outline-success my-2 my-sm-0" onclick="window.location.href='/login'">Login</button>
+    <button class="btn btn-outline-success my-2 my-sm-0" onclick="window.location.href='/login'">Login</button>
 {{/if}}

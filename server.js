@@ -216,6 +216,8 @@ app.get('/seemovie/:id', (req, res) => {
     }
 });
 
+
+
 //--------------------------- Admin -----------------------------------------------------------------
 app.get('/addmovie', (req, res) => {
     if(req.session.loginComplete){
@@ -273,6 +275,13 @@ app.get('/getinformation/:id', (req, res) => {
             login: req.session.alertLogin,
             uname: req.session.uname
         });
+    });
+});
+
+app.get('/myprofile', (req, res) => {
+    res.render('myprofile.hbs',{
+        login: req.session.alertLogin,
+        uname: req.session.uname
     });
 });
 
