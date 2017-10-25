@@ -1,0 +1,10 @@
+.head {
+    color: black;
+    font-family: 'Fascinate Inline', cursive;
+    background-color: white;
+}
+
+.foot{
+    color: white;
+    padding: 0.5rem 1rem;
+}

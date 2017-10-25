@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>movie 2 see | HOME</title>
+    <link rel="shortcut icon" href="/img/icon.png" />
+    <link rel="stylesheet" href="/css/bootstrap.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Fascinate+Inline" rel="stylesheet">
+</head>
+
+<body>
+    {{> nav}}
+    <div class="container">
+        <br>
+        {{> slideShowNewMovie}}
+        <br>
+        <center>
+            <div class="row">
+                {{# each datas}}
+                <div class="col-sm-6 col-lg-4">
+                    <div class="card" style="width: 20rem;">
+                        <div class="card-body">
+                            <a href="/seemovie/{{this.id}}">
+                                <img class="card-img-top" src="/img/movie_card/{{this.img}}" alt="Card image cap">
+                            </a>
+                            <div class="card-body">
+                                <font size="2">
+                                    <center>{{this.title}}</center>
+                                </font>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{/each}}
+            </div>
+            <br>
+        </center>
+
+
+
+
+    </div>
+    <br> 
+    {{> foot}}
+
+</body>
+
+</html>

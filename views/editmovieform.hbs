@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ADMIN | Movie information</title>
+    <link rel="shortcut icon" href="/img/icon.png" />
+    <link rel="stylesheet" href="/css/bootstrap.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Fascinate+Inline" rel="stylesheet">
+</head>
+
+<body>
+    {{> navAdmin}}
+
+    <form action="/editmovie/{{informationmovie.id}}" method="post"> 
+        {{!-- ID : <input type="text" value="{{informationmovie.id}}" name="id" disabled> <br>
+        Title : <input type="text" value="{{informationmovie.title}}" name="title"> <br>
+        Image : <input type="text" value="{{informationmovie.img}}" name="image"> <br>
+        Year : <input type="text" value="{{informationmovie.year}}" name="year"> <br>
+        Type : 
+        <select name="type" id="type">
+            <option value="">--- ระบุประเภทหนัง ---</option>
+            {{# if ss_type_thaimovie}}
+                <option value="thaimovie" selected="selected">หนังไทย</option>
+            {{else}}
+                <option value="thaimovie" >หนังไทย</option>
+            {{/if}}
+            {{# if ss_type_othermovie}}
+                <option value="othermovie" selected="selected">หนังต่างประเทศ</option>
+            {{else}}
+                <option value="othermovie">หนังต่างประเทศ</option>
+            {{/if}}
+            {{# if ss_type_cartoon}}
+                <option value="cartoon" selected="selected">การ์ตูน</option>
+            {{else}}
+                <option value="cartoon" >การ์ตูน</option>
+            {{/if}}
+        </select> <br>
+        Trailer link: <input type="text" value="{{informationmovie.trailer}}" name="trailer" id="trailer"> <br>
+        Movie embed link: <input type="text" value="{{informationmovie.movieLink}}" name="movieLink" id="movieLink"> <br>
+        <input type="hidden" value="{{informationmovie.createMovieDate}}" name="createMovieDate" > <br>
+        <input type="hidden" value="{{informationmovie.lastEdit}}" name="lastEdit" disabled> <br><br>
+        <button type="submit">Edit</button> --}}
+
+        <div class="container">
+        <br>
+        <div class="form-group row">
+            <label for="staticEmail" class="col-sm-2 col-form-label">ID</label>
+            <div class="col-sm-10">
+                <input type="text" readonly class="form-control" name="id" value="{{informationmovie.id}}">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="staticEmail" class="col-sm-2 col-form-label">Title</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="title" value="{{informationmovie.title}}">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="staticEmail" class="col-sm-2 col-form-label">Image_card</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="image" value="{{informationmovie.img}}">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="staticEmail" class="col-sm-2 col-form-label">Year</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="year" value="{{informationmovie.year}}">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="staticEmail" class="col-sm-2 col-form-label">Type</label>
+            <div class="col-sm-10">
+                <select name="type" id="type" class="form-control">
+            <option value="">--- ระบุประเภทหนัง ---</option>
+            {{# if ss_type_thaimovie}}
+                <option value="thaimovie" selected="selected">หนังไทย</option>
+            {{else}}
+                <option value="thaimovie" >หนังไทย</option>
+            {{/if}}
+            {{# if ss_type_othermovie}}
+                <option value="othermovie" selected="selected">หนังต่างประเทศ</option>
+            {{else}}
+                <option value="othermovie">หนังต่างประเทศ</option>
+            {{/if}}
+            {{# if ss_type_cartoon}}
+                <option value="cartoon" selected="selected">การ์ตูน</option>
+            {{else}}
+                <option value="cartoon" >การ์ตูน</option>
+            {{/if}}
+        </select> 
+            </div>
+        </div>
+        <br>
+        <div class="form-group row">
+            <label for="staticEmail" class="col-sm-2 col-form-label">Detail</label>
+            <div class="col-sm-10">
+                <textarea rows="4" class="form-control" name="detail" id="detail"
+                   style="resize: none;" >{{informationmovie.detail}}</textarea>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="staticEmail" class="col-sm-2 col-form-label">Trailer embed link</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="trailer" value="{{informationmovie.trailer}}">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="staticEmail" class="col-sm-2 col-form-label">Movie embed link</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="movieLink" value="{{informationmovie.movieLink}}">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="staticEmail" class="col-sm-2 col-form-label">Created date</label>
+            <div class="col-sm-10">
+                <input type="text" readonly class="form-control" name="createMovieDate" value="{{informationmovie.createMovieDate}}">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="staticEmail" class="col-sm-2 col-form-label">Lasted update</label>
+            <div class="col-sm-10">
+                <input type="text" readonly class="form-control" name="lastEdit" value="{{informationmovie.lastEdit}}">
+            </div>
+        </div>
+        <button class="btn btn-primary btn-lg btn-block">
+            Edit information</button>
+            <br>
+        <a href="/showlistmovie" class="btn btn-primary btn-lg btn-block">
+            << Back to show list movie</a>
+            <br>
+    </div>
+    </form>
+
+    {{> foot}}
+
+</body>
+
+</html>

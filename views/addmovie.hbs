@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ADMIN | Add movie</title>
+    <link rel="shortcut icon" href="/img/icon.png" />
+    <link rel="stylesheet" href="/css/bootstrap.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Fascinate+Inline" rel="stylesheet">
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+</head>
+
+<body>
+    {{> navAdmin}} {{# if addmoviecomplete}}
+    <script>
+        alert("Insert movie complete");
+    </script> {{/if}}
+    <br>
+    <div class="container">
+        <center><img src="/img/logo.png" alt="logo"></center>
+        <form action="/addmovietodb" method="post">
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">
+                    <i class="fa fa-film" aria-hidden="true"></i>
+                </span>
+                <input type="text" class="form-control" name="title" id="title" placeholder="Movie name" aria-label="title" aria-describedby="basic-addon1"
+                    required>
+            </div>
+            <br>
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">
+                    <i class="fa fa-film" aria-hidden="true"></i>
+                </span>
+                <input type="text" class="form-control" name="image" id="image" placeholder="Image_card.jpg" aria-label="image" aria-describedby="basic-addon1"
+                    required>
+            </div>
+            <br>
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">
+                    <i class="fa fa-film" aria-hidden="true"></i>
+                </span>
+                <input type="text" class="form-control" name="year" id="year" placeholder="2017" aria-label="year" aria-describedby="basic-addon1"
+                    required>
+            </div>
+            <br>
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">
+                    <i class="fa fa-film" aria-hidden="true"></i>
+                </span>
+                <select name="type" id="type" class="form-control"  required>
+                    <option value="">--- ระบุประเภทหนัง ---</option>
+                    <option value="thaimovie">หนังไทย</option>
+                    <option value="othermovie">หนังต่างประเทศ</option>
+                    <option value="cartoon">การ์ตูน</option>
+                </select>
+            </div>
+            <br>
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">
+                    <i class="fa fa-film" aria-hidden="true"></i>
+                </span>
+                <textarea rows="4" class="form-control" name="detail" id="detail" placeholder="Detail" 
+                   style="resize: none;" required></textarea>
+            </div>
+            <br>
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">
+                    <i class="fa fa-film" aria-hidden="true"></i>
+                </span>
+                <input type="text" class="form-control" name="trailer" id="trailer" placeholder="Trailer embed link" aria-label="trailer" aria-describedby="basic-addon1"
+                    required>
+            </div>
+            <br>
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">
+                    <i class="fa fa-film" aria-hidden="true"></i>
+                </span>
+                <input type="text" class="form-control" name="movieLink" id="ymovieLinkar" placeholder="Movie embed Link" aria-label="movieLink" aria-describedby="basic-addon1"
+                    required>
+            </div>
+            <br>
+            <center>
+                <button type="submit" class="btn btn-primary btn-lg btn-block">OK</button>
+            </center>
+        </form>
+    </div>
+    <br>
+    {{> foot}}
+
+
+</body>
+
+</html>

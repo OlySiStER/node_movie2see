@@ -1,0 +1,57 @@
+<nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03"
+        aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            {{# if ss_homepage}}
+            <li class="nav-item active">
+                <a class="nav-link" href="/">
+                    <img src="/img/logo-white.png" height="25px">
+                </a>
+            </li>
+            {{ else }}
+            <li class="nav-item active">
+                <a class="nav-link" href="/">
+                    <img src="/img/logo-gray-2.png" height="25px">
+                </a>
+            </li>
+            {{/if}} {{# if ss_thaimovie}}
+            <li class="nav-item active">
+                <a class="nav-link" href="/thaimovie">หนังไทย</a>
+            </li>
+            {{ else }}
+            <li class="nav-item">
+                <a class="nav-link" href="/thaimovie">หนังไทย</a>
+            </li>
+            {{/if}} {{# if ss_othermovie}}
+            <li class="nav-item active">
+                <a class="nav-link" href="/othermovie">หนังต่างประเทศ</a>
+            </li>
+            {{ else }}
+            <li class="nav-item">
+                <a class="nav-link" href="/othermovie">หนังต่างประเทศ</a>
+            </li>
+            {{/if}} {{# if ss_cartoon}}
+            <li class="nav-item active">
+                <a class="nav-link" href="/cartoon">การ์ตูน</a>
+            </li>
+            {{ else }}
+            <li class="nav-item">
+                <a class="nav-link" href="/cartoon">การ์ตูน</a>
+            </li>
+            {{/if}}
+            {{!-- <li>
+                <form class="form-inline">
+                    &nbsp&nbsp&nbsp
+                    <input class="form-control mr-sm-2" type="text" placeholder="Movie name" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+            </li> --}}
+        </ul>
+        {{> loginbtn}}
+
+    </div>
+</nav>

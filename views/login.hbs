@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>movie 2 see | Login</title>
+    <link rel="shortcut icon" href="/img/icon.png" />
+    <link rel="stylesheet" href="/css/bootstrap.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Fascinate+Inline" rel="stylesheet">
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+</head>
+
+<body class="bg-dark">
+
+    
+    {{#if regisComplete}}
+    <script>
+        alert("Sign Up complete - Welcome to movie2see");
+    </script> {{/if}}
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <center>
+        <img src="/img/logo-gray.png">
+    </center>
+    <br>
+    <div class="container-login col-lg-4">
+        <div class="card text-center">
+            <div class="card-header bg-dark" style="color: white;">
+                <h4>Login to movie2see</h4>
+            </div>
+            <div class="card-body">
+                {{# if loginIncorrect}}
+                    <div class="alert alert-danger" role="alert">
+                        Username or password incorrect !!!
+                    </div>
+                {{/if}}
+
+                {{# if plslogin}}
+                    <div class="alert alert-danger" role="alert">
+                        Please login !!!
+                    </div>
+                {{/if}}
+                <form action="/checklogin" method="post">
+                    <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon1">
+                            <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+                        </span>
+                        <input type="text" class="form-control" name="uname" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1"
+                            autofocus required>
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon1">
+                            <i class="fa fa-key" aria-hidden="true"></i>
+                        </span>
+                        <input type="password" class="form-control" name="password" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1"
+                            required>
+                    </div>
+                    <br>
+                    <button class="btn btn-outline-info col-lg-4" type="submit">Login</button>
+                    &nbsp&nbsp&nbsp&nbsp&nbsp
+                    <button class="btn btn-outline-danger col-lg-4" type="reset">Clear</button>
+                </form>
+            </div>
+            <div class="card-footer bg-dark" style="color: white;">
+                New to movie2see?
+                <a href="/signup">Sign Up</a>
+            </div>
+        </div>
+    </div>
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br> {{> foot}}
+</body>
+
+</html>

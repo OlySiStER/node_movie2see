@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ADMIN | Movie information</title>
+    <link rel="shortcut icon" href="/img/icon.png" />
+    <link rel="stylesheet" href="/css/bootstrap.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Fascinate+Inline" rel="stylesheet">
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+</head>
+
+<body>
+    {{> navAdmin}}
+    <div class="container">
+        <br>
+        <center>
+            <img src="/img/movie_card/{{informationmovie.img}}" alt="pic_movie" ><br><br>
+        </center>
+        <div class="form-group row">
+            <label for="staticEmail" class="col-sm-2 col-form-label">ID</label>
+            <div class="col-sm-10">
+                <input type="text" readonly class="form-control" value="{{informationmovie.id}}">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="staticEmail" class="col-sm-2 col-form-label">Title</label>
+            <div class="col-sm-10">
+                <input type="text" readonly class="form-control" value="{{informationmovie.title}}">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="staticEmail" class="col-sm-2 col-form-label">Image_card</label>
+            <div class="col-sm-10">
+                <input type="text" readonly class="form-control" value="{{informationmovie.img}}">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="staticEmail" class="col-sm-2 col-form-label">Year</label>
+            <div class="col-sm-10">
+                <input type="text" readonly class="form-control" value="{{informationmovie.year}}">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="staticEmail" class="col-sm-2 col-form-label">Type</label>
+            <div class="col-sm-10">
+                <input type="text" readonly class="form-control" value="{{informationmovie.type}}">
+            </div>
+        </div>
+        <br>
+        <div class="form-group row">
+            <label for="staticEmail" class="col-sm-2 col-form-label">Detail</label>
+            <div class="col-sm-10">
+                <textarea rows="4" class="form-control" name="detail" id="detail"
+                   style="resize: none;"  readonly>{{informationmovie.detail}}</textarea>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="staticEmail" class="col-sm-2 col-form-label">Trailer embed link</label>
+            <div class="col-sm-10">
+                <input type="text" readonly class="form-control" value="{{informationmovie.trailer}}">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="staticEmail" class="col-sm-2 col-form-label">Movie embed link</label>
+            <div class="col-sm-10">
+                <input type="text" readonly class="form-control" value="{{informationmovie.movieLink}}">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="staticEmail" class="col-sm-2 col-form-label">Created date</label>
+            <div class="col-sm-10">
+                <input type="text" readonly class="form-control" value="{{informationmovie.createMovieDate}}">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="staticEmail" class="col-sm-2 col-form-label">Lasted update</label>
+            <div class="col-sm-10">
+                <input type="text" readonly class="form-control" value="{{informationmovie.lastEdit}}">
+            </div>
+        </div>
+        <a href="/showlistmovie" class="btn btn-primary btn-lg btn-block">
+            << Back to show list movie</a>
+            <br>
+    </div>
+    {{> foot}}
+</body>
+
+</html>

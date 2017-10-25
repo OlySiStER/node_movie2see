@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ADMIN | Show list movie</title>
+    <link rel="shortcut icon" href="/img/icon.png" />
+    <link rel="stylesheet" href="/css/bootstrap.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Fascinate+Inline" rel="stylesheet">
+</head>
+
+<body>
+    {{> navAdmin}}
+    <div class="container">
+        <br>
+
+
+        <table class="table table-hover">
+            <thead class="thead-inverse">
+                <tr>
+                    <th>
+                        <center>#
+                        </center>
+                    </th>
+                    <th>
+                        <center>Picture</center>
+                    </th>
+                    <th>
+                        <center>Title
+                        </center>
+                    </th>
+                    <th>
+                        <center>Create Date
+                        </center>
+                    </th>
+                    <th>
+                        <center>Last Update
+                        </center>
+                    </th>
+                    <th>
+                        <center>View
+                        </center>
+                    </th>
+                    <th>
+                        <center>Edit
+                        </center>
+                    </th>
+                    <th>
+                        <center>Delete
+                        </center>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {{# each datas}}
+                <tr>
+                    <th scope="row">
+                        <center>{{this.id}}
+                        </center>
+                    </th>
+                    <td>
+                        <center><img src="/img/movie_card/{{this.img}}" alt="pic_movie" width="150">
+                        </center>
+                    </td>
+                    <td>
+                        <center>{{this.title}}
+                        </center>
+                    </td>
+                    <td>
+                        <center>{{this.createMovieDate}}
+                        </center>
+                    </td>
+                    <td>
+                        <center>{{this.lastEdit}}
+                        </center>
+                    </td>
+                    <td>
+                        <center>
+                            <a href="/getinformation/{{this.id}}" class='btn btn-primary'> View </a>
+                        </center>
+                    </td>
+                    <td>
+                        <center>
+                            <a href="/editmovieform/{{this.id}}" class='btn btn-warning'> Edit </a>
+                        </center>
+                    </td>
+                    <td>
+                        <center>
+                            <a href="/delete/{{this.id}}" class='btn btn-danger'> Delete </a>
+                        </center>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+    {{> foot}}
+</body>
+
+</html>

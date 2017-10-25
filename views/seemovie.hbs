@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>movie 2 see</title>
+    <link rel="shortcut icon" href="/img/icon.png" />
+    <link rel="stylesheet" href="/css/bootstrap.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Fascinate+Inline" rel="stylesheet">
+</head>
+
+<body>
+    {{> nav}}
+    <br>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-lg-4">
+                <div class="card-seemovie" style="width: 20rem;">
+                    <div class="card-body">
+                        <a href="/bladerunner">
+                            <img class="card-img-top" src="/img/movie_card/{{informationmovie.img}}" alt="Card image cap">
+                        </a>
+                        <div class="card-body">
+                                <font size="2"><center>{{informationmovie.title}}</center></font>
+                                <br>
+                                <font size="2"><center>{{informationmovie.detail}}</center></font>
+                        </div>
+                    </div>
+                </div>
+                <br>
+            </div>
+
+            <div class="col-sm-12 col-lg-8">
+                <center><h4>Trailer</h4></center>
+                <div class="movie-trailer">
+                    <iframe width="729px" height="353px" src="{{informationmovie.trailer}}" frameborder="0" allowfullscreen></iframe>
+                </div>
+                <br>
+                <hr>
+                <center><h4>Movie HD Master</h4></center>
+                <div class="container-iframe">
+                <br>
+                <iframe width="729px" height="353px" src="{{informationmovie.movieLink}}" frameborder="0" allowfullscreen></iframe>
+                <br><br>
+            </div>
+            </div>
+        </div>
+    
+    </div>
+    {{> foot}}
+</body>
+
+</html>
