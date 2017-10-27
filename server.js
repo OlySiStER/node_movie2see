@@ -26,12 +26,22 @@ app.use('/api', jsonServer.router('db.json'));
 
 app.get('/', (req, res) => {
     req.session.homepage = true;
+    // add find information for use in modal -------------------------------------------------------------------------------
+    console.log('From server url : https://movie2see.herokuapp.com/api/user?username=' + req.session.uname);
+    request({
+        url: 'https://movie2see.herokuapp.com/api/user?username=' + req.session.uname,
+        json: true
+    }, (error, response, body) => {
+        req.session.informationOfUser = body;
+    });
+    // End of add find information for use in modal ------------------------------------------------------------------------
     request({
         url: 'https://movie2see.herokuapp.com/api/movie',
         json: true
     }, (error, response, body) => {
         res.render('index.hbs', {
             datas: body,
+            informationOfUser: req.session.informationOfUser, // send informationOfUser for use in modal -------------------
             ss_homepage: req.session.homepage,
             login: req.session.alertLogin,
             uname: req.session.uname
@@ -143,12 +153,23 @@ app.get('/thaimovie', (req, res) => {
     req.session.othermovie = false;
     req.session.cartoon = false;
 
+    // add find information for use in modal -------------------------------------------------------------------------------
+    console.log('From server url : https://movie2see.herokuapp.com/api/user?username=' + req.session.uname);
+    request({
+        url: 'https://movie2see.herokuapp.com/api/user?username=' + req.session.uname,
+        json: true
+    }, (error, response, body) => {
+        req.session.informationOfUser = body;
+    });
+    // End of add find information for use in modal ------------------------------------------------------------------------
+
     request({
         url: 'https://movie2see.herokuapp.com/api/movie/?type=thaimovie',
         json: true
     }, (error, response, body) => {
         res.render('thaimovie.hbs', {
             datas: body,
+            informationOfUser: req.session.informationOfUser, // send informationOfUser for use in modal -------------------
             ss_thaimovie: req.session.thaimovie,
             ss_othermovie: req.session.othermovie,
             ss_cartoon: req.session.cartoon,
@@ -163,12 +184,23 @@ app.get('/othermovie', (req, res) => {
     req.session.othermovie = true;
     req.session.cartoon = false;
 
+    // add find information for use in modal -------------------------------------------------------------------------------
+    console.log('From server url : https://movie2see.herokuapp.com/api/user?username=' + req.session.uname);
+    request({
+        url: 'https://movie2see.herokuapp.com/api/user?username=' + req.session.uname,
+        json: true
+    }, (error, response, body) => {
+        req.session.informationOfUser = body;
+    });
+    // End of add find information for use in modal ------------------------------------------------------------------------
+
     request({
         url: 'https://movie2see.herokuapp.com/api/movie/?type=othermovie',
         json: true
     }, (error, response, body) => {
         res.render('thaimovie.hbs', {
             datas: body,
+            informationOfUser: req.session.informationOfUser, // send informationOfUser for use in modal -------------------
             ss_thaimovie: req.session.thaimovie,
             ss_othermovie: req.session.othermovie,
             ss_cartoon: req.session.cartoon,
@@ -179,6 +211,17 @@ app.get('/othermovie', (req, res) => {
 });
 
 app.get('/cartoon', (req, res) => {
+
+    // add find information for use in modal -------------------------------------------------------------------------------
+    console.log('From server url : https://movie2see.herokuapp.com/api/user?username=' + req.session.uname);
+    request({
+        url: 'https://movie2see.herokuapp.com/api/user?username=' + req.session.uname,
+        json: true
+    }, (error, response, body) => {
+        req.session.informationOfUser = body;
+    });
+    // End of add find information for use in modal ------------------------------------------------------------------------
+
     req.session.thaimovie = false;
     req.session.othermovie = false;
     req.session.cartoon = true;
@@ -189,6 +232,7 @@ app.get('/cartoon', (req, res) => {
     }, (error, response, body) => {
         res.render('thaimovie.hbs', {
             datas: body,
+            informationOfUser: req.session.informationOfUser, // send informationOfUser for use in modal -------------------
             ss_thaimovie: req.session.thaimovie,
             ss_othermovie: req.session.othermovie,
             ss_cartoon: req.session.cartoon,
@@ -199,6 +243,17 @@ app.get('/cartoon', (req, res) => {
 });
 
 app.get('/seemovie/:id', (req, res) => {
+
+    // add find information for use in modal -------------------------------------------------------------------------------
+    console.log('From server url : https://movie2see.herokuapp.com/api/user?username=' + req.session.uname);
+    request({
+        url: 'https://movie2see.herokuapp.com/api/user?username=' + req.session.uname,
+        json: true
+    }, (error, response, body) => {
+        req.session.informationOfUser = body;
+    });
+    // End of add find information for use in modal ------------------------------------------------------------------------
+
     if(req.session.loginComplete){
         request({
             url: 'https://movie2see.herokuapp.com/api/movie/'+req.params.id,
@@ -206,6 +261,7 @@ app.get('/seemovie/:id', (req, res) => {
         }, (error, response, body) => {
             res.render('seemovie.hbs',{
                 informationmovie: body,
+                informationOfUser: req.session.informationOfUser, // send informationOfUser for use in modal -------------------
                 login: req.session.alertLogin,
                 uname: req.session.uname
             });

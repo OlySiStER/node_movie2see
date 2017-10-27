@@ -1,29 +1,152 @@
 <script>
-    function confirmLogout() {
-        return confirm('Do you really want to logout?');
-    }
-</script> 
-
-{{# if login}}
-{{!-- <div class="row"> --}}
-    {{!-- <form action="/logout" method="get" onsubmit="return confirmLogout()"> --}}
-        {{# if uname}} 
+  function confirmLogout() {
+    return confirm('Do you really want to logout?');
+  }
+</script> {{# if login}} {{# if uname}}
 <div class="dropdown">
-  <button class="btn btn-outline-success my-2 my-sm-0 dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-   <i class="fa fa-user-o" aria-hidden="true"></i> Welcome : {{uname}} &nbsp
+  <button class="btn btn-outline-success my-2 my-sm-0 dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+    aria-haspopup="true" aria-expanded="false">
+    <i class="fa fa-user-o" aria-hidden="true"></i> Welcome : {{uname}} &nbsp
   </button>
   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-    <a class="dropdown-item" href="/myprofile">My profile</a>
-    {{!-- <a class="dropdown-item" href="#">Another action</a> --}}
+    {{!--
+    <a class="dropdown-item" href="/myprofile">My profile</a> --}}
+    <a class="dropdown-item" data-toggle="modal" data-target="#myProfileModal" id="profilebtn">My profile</a>
     <a class="dropdown-item" href="/logout" onclick="return confirmLogout()">Logout</a>
   </div>
 </div>
-            {{!-- <span style="color: white;">Welcome : {{uname}}</span> &nbsp --}}
-        {{/if}}
-    {{!-- <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Logout</button> --}}
-    {{!-- </form> --}}
-    
-    {{!-- </div> --}}
-{{else}}
-    <button class="btn btn-outline-success my-2 my-sm-0" onclick="window.location.href='/login'">Login</button>
+{{/if}} {{else}}
+<button class="btn btn-outline-success my-2 my-sm-0" onclick="window.location.href='/login'">Login</button>
 {{/if}}
+<input type="hidden" name="usernameOfUser" id="usernameOfUser" value="{{uname}}">
+<div class="modal fade" id="myProfileModal" tabindex="-1" role="dialog" aria-labelledby="myProfileModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="myProfileModalLabel">Profile of {{uname}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body form-group row">
+        {{# each informationOfUser}}
+          <label for="staticID" class="col-sm-4 col-form-label"><strong>ID</strong></label>
+          <div class="col-sm-8">
+            <input type="text" readonly class="form-control-plaintext" id="staticID" value="{{this.id}}">
+          </div>
+
+          <label for="staticEmail" class="col-sm-4 col-form-label"><strong>Email</strong></label>
+          <div class="col-sm-8">
+            <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{this.email}}">
+          </div>
+
+          <label for="staticUsername" class="col-sm-4 col-form-label"><strong>Username</strong></label>
+          <div class="col-sm-8">
+            <input type="text" readonly class="form-control-plaintext" id="staticUsername" value="{{this.username}}">
+          </div>
+
+          <label for="staticStatus" class="col-sm-4 col-form-label"><strong>Status</strong></label>
+          <div class="col-sm-8">
+            <input type="text" readonly class="form-control-plaintext" id="staticStatus" value="{{this.status}}">
+          </div>
+
+          <label for="staticRegisterDate" class="col-sm-4 col-form-label"><strong>Register date</strong></label>
+          <div class="col-sm-8">
+            <input type="text" readonly class="form-control-plaintext" id="staticRegisterDate" value="{{this.registerDate}}">
+          </div>
+        {{/each}}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#editProfileModal">Edit profile</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#editPasswordModal">Edit password</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="editProfileModal" tabindex="-1" role="dialog" aria-labelledby="editProfileModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editProfileModalLabel">Edit profile</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body form-group row">
+        {{# each informationOfUser}}
+          <label for="staticID" class="col-sm-4 col-form-label"><strong>ID</strong></label>
+          <div class="col-sm-8">
+            <input type="text" readonly class="form-control" id="staticID" value="{{this.id}}">
+          </div>
+
+          <label for="staticEmail" class="col-sm-4 col-form-label"><strong>Email</strong></label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control" id="staticEmail" value="{{this.email}}">
+          </div>
+
+          <label for="staticUsername" class="col-sm-4 col-form-label"><strong>Username</strong></label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control" id="staticUsername" value="{{this.username}}">
+          </div>
+
+          <label for="staticStatus" class="col-sm-4 col-form-label"><strong>Status</strong></label>
+          <div class="col-sm-8">
+            <input type="text" readonly class="form-control" id="staticStatus" value="{{this.status}}">
+          </div>
+
+          <label for="staticRegisterDate" class="col-sm-4 col-form-label"><strong>Register date</strong></label>
+          <div class="col-sm-8">
+            <input type="text" readonly class="form-control" id="staticRegisterDate" value="{{this.registerDate}}">
+          </div>
+          <input type="hidden" name="password" id="password" value="{{this.password}}">
+        {{/each}}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="editPasswordModal" tabindex="-1" role="dialog" aria-labelledby="editPasswordModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editPasswordModalLabel">Edit password</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      {{# each informationOfUser}}
+      <input type="hidden" name="password" id="id" value="{{this.id}}">
+      <input type="hidden" name="email" id="email" value="{{this.email}}">
+      <input type="hidden" name="username" id="username" value="{{this.username}}">
+      <input type="hidden" name="status" id="status" value="{{this.status}}">
+      <input type="hidden" name="registerDate" id="registerDate" value="{{this.registerDate}}">
+      <div class="modal-body form-group row">
+        <label for="staticPassword" class="col-sm-4 col-form-label"><strong>Password</strong></label>
+          <div class="col-sm-8">
+            <input type="password" class="form-control" id="staticPassword">
+          </div>
+
+        <label for="staticRePassword" class="col-sm-4 col-form-label"><strong>Re-Password</strong></label>
+          <div class="col-sm-8">
+            <input type="password" class="form-control" id="staticRePassword">
+          </div>
+      </div>
+      {{/each}}
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{!--  Note 
+      - User navbar tab to select edit profile data or edit password
+      - User ajax to put update for profile data or password
+--}}
