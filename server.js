@@ -24,33 +24,6 @@ app.use('/api', jsonServer.router('db.json'));
 
 //end test json-server
 
-// test upload photo
-var formidable = require('formidable');
-var fs = require('fs');
-var form = new formidable.IncomingForm();
-
-app.post('/fileupload', (req, res) => {
-    form.parse(req, function (err, fields, files) {
-        var oldpath = files.filetoupload.path;
-        var newpath = __dirname + '/assets/img/movie_card/' + files.filetoupload.name;
-        fs.rename(oldpath, newpath, function (err) {
-          if (err) throw err;
-          res.write('File uploaded and moved!');
-          res.end();
-        });
-    });
-});
-
-
-app.get('/uploadpage', (req, res) => {
-    res.render('uploadpage.hbs');
-});
-
-app.post('/upload', function(req, res) {
-    res.send(req.files);
-});
-// end test upload
-
 app.get('/', (req, res) => {
     req.session.homepage = true;
     // add find information for use in modal -------------------------------------------------------------------------------
@@ -362,6 +335,33 @@ app.post('/editpassword/:id', (req, res) => {
 });
 
 //--------------------------- Admin -----------------------------------------------------------------
+// test upload photo
+var formidable = require('formidable');
+var fs = require('fs');
+var form = new formidable.IncomingForm();
+
+app.post('/fileupload', (req, res) => {
+    form.parse(req, function (err, fields, files) {
+        var oldpath = files.filetoupload.path;
+        var newpath = __dirname + '/assets/img/movie_card/' + files.filetoupload.name;
+        fs.rename(oldpath, newpath, function (err) {
+          if (err) throw err;
+          res.write('File uploaded and moved!');
+          res.end();
+        });
+    });
+});
+
+
+app.get('/uploadpage', (req, res) => {
+    res.render('uploadpage.hbs');
+});
+
+app.post('/upload', function(req, res) {
+    res.send(req.files);
+});
+// end test upload
+
 app.get('/addmovie', (req, res) => {
     if(req.session.loginComplete){
         req.session.ss_addmovie = true;
