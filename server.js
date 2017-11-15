@@ -346,15 +346,11 @@ app.post('/fileupload', (req, res) => {
         var newpath = __dirname + '/assets/img/movie_card/' + files.filetoupload.name;
         fs.rename(oldpath, newpath, function (err) {
           if (err) throw err;
-          res.write('File uploaded and moved!');
-          res.end();
+          req.session.ss_uploadPicComplete = true;
+          console.log(req.session.ss_uploadPicComplete);
+          res.redirect('/uploadpage');
         });
     });
-});
-
-
-app.get('/uploadpage', (req, res) => {
-    res.render('uploadpage.hbs');
 });
 
 app.post('/upload', function(req, res) {
@@ -497,6 +493,7 @@ app.get('/showlistmovie', (req, res) => {
             json: true
         }, (error, response, body) => {
             req.session.ss_addmovie = false;
+            req.session.ss_uploadpage = false;
             req.session.ss_showlistmovie = true;
             req.session.alertLogin = true;
             res.render('showlistmovie.hbs', {
@@ -507,6 +504,35 @@ app.get('/showlistmovie', (req, res) => {
                 login: req.session.alertLogin,
                 uname: req.session.uname
             });
+        });
+    }else{
+        req.session.plsLogin = true;
+        res.redirect('/login');
+    }
+});
+
+app.get('/uploadpage', (req, res) => {
+    if(req.session.loginComplete){
+        request({
+            url: 'https://movie2see.herokuapp.com/api/movie',
+            json: true
+        }, (error, response, body) => {
+            req.session.ss_addmovie = false;
+            req.session.ss_showlistmovie = false;
+            req.session.ss_uploadpage = true;
+            console.log(req.session.ss_uploadPicComplete);
+            req.session.alertLogin = true;
+            res.render('uploadpage.hbs', {
+                datas: body,
+                login: req.session.alertLogin,
+                ss_uploadPicComplete: req.session.ss_uploadPicComplete,
+                ss_addmovie: req.session.ss_addmovie,
+                ss_showlistmovie: req.session.ss_showlistmovie,
+                ss_uploadpage: req.session.ss_uploadpage,
+                login: req.session.alertLogin,
+                uname: req.session.uname
+            });
+            req.session.ss_uploadPicComplete = false;
         });
     }else{
         req.session.plsLogin = true;

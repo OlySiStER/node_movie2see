@@ -1,12 +1,46 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <title>Sample File Upload</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ADMIN | Add movie</title>
+    <link rel="shortcut icon" href="/img/icon.png" />
+    <link rel="stylesheet" href="/css/bootstrap.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Fascinate+Inline" rel="stylesheet">
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
 </head>
+
 <body>
-    <form action="/fileupload" method="post" enctype="multipart/form-data">
-        <input type="file" name="filetoupload">
-        <input type="submit" value="Upload">
-    </form>
+    {{> navAdmin}} {{# if ss_uploadPicComplete}}
+    <script>
+        alert("Upload image complete");
+    </script> {{/if}}
+    <br>
+    <div class="container">
+        <center>
+            <img src="/img/logo.png" alt="logo">
+        </center>
+        <br>
+        <br>
+        <br>
+        <form action="/fileupload" method="post" enctype="multipart/form-data">
+            <input type="file" name="filetoupload" class="form-control">
+            <br>
+            <center>
+                <input type="submit" value="Upload" class="btn btn-primary">
+            </center>
+        </form>
+        <small id="emailHelp" class="form-text text-muted">
+            <center>
+                <font style="color:red;">Please upload Image_card.jpg that same name with movie Image_card.jpg</font>
+            </center>
+        </small>
+    </div>
+    <br> {{> footfixbottom}}
+
 </body>
+
 </html>

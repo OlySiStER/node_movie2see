@@ -35,6 +35,15 @@
                 <a class="nav-link" href="/showlistmovie">ดูรายการหนัง</a>
             </li>
             {{/if}}
+            {{# if ss_uploadpage}}
+            <li class="nav-item active">
+                <a class="nav-link" href="/uploadpage">อัพโหลดรูปภาพ</a>
+            </li>
+            {{ else }}
+            <li class="nav-item">
+                <a class="nav-link" href="/uploadpage">อัพโหลดรูปภาพ</a>
+            </li>
+            {{/if}}
             {{!-- <li>
                 <form class="form-inline">
                     &nbsp&nbsp&nbsp
