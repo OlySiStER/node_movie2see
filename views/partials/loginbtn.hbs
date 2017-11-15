@@ -2,6 +2,21 @@
   function confirmLogout() {
     return confirm('Do you really want to logout?');
   }
+
+  function confirmEditProfile() {
+    return confirm('Do you really want to edit your profile?');
+  }
+
+  function confirmEditPassword(){
+    var newPass = document.forms["editpassform"]["newpassword2"].value;
+    var conNewPass = document.forms["editpassform"]["newrepassword2"].value;
+    if(newPass == conNewPass){
+      return confirm('Do you really want to edit your password?');
+    }else {
+      alert("Password Not Match !");
+      return false;
+    }
+  }
 </script> {{# if login}} {{# if uname}}
 <div class="dropdown">
   <button class="btn btn-outline-success my-2 my-sm-0 dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
@@ -54,6 +69,10 @@
           <div class="col-sm-8">
             <input type="text" readonly class="form-control-plaintext" id="staticRegisterDate" value="{{this.registerDate}}">
           </div>
+          <label for="staticLastEdit" class="col-sm-4 col-form-label"><strong>Last update</strong></label>
+          <div class="col-sm-8">
+            <input type="text" readonly class="form-control-plaintext" id="staticLastEdit" name="staticLastEdit" value="{{this.lastEdit}}">
+          </div>
         {{/each}}
       </div>
       <div class="modal-footer">
@@ -74,39 +93,45 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body form-group row">
+      <div class="modal-body">
         {{# each informationOfUser}}
-          <label for="staticID" class="col-sm-4 col-form-label"><strong>ID</strong></label>
-          <div class="col-sm-8">
-            <input type="text" readonly class="form-control" id="staticID" value="{{this.id}}">
-          </div>
+          <form action="/editprofile/{{this.id}}" method="post" class="form-group row" onsubmit="return confirmEditProfile()">
+            <label for="staticID" class="col-sm-4 col-form-label"><strong>ID</strong></label>
+            <div class="col-sm-8">
+              <input type="text" readonly class="form-control" id="staticID" name="staticID" value="{{this.id}}">
+            </div>
 
-          <label for="staticEmail" class="col-sm-4 col-form-label"><strong>Email</strong></label>
-          <div class="col-sm-8">
-            <input type="text" class="form-control" id="staticEmail" value="{{this.email}}">
-          </div>
+            <label for="staticEmail" class="col-sm-4 col-form-label"><strong>Email</strong></label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" id="staticEmail" name="staticEmail" value="{{this.email}}">
+            </div>
 
-          <label for="staticUsername" class="col-sm-4 col-form-label"><strong>Username</strong></label>
-          <div class="col-sm-8">
-            <input type="text" class="form-control" id="staticUsername" value="{{this.username}}">
-          </div>
+            <label for="staticUsername" class="col-sm-4 col-form-label"><strong>Username</strong></label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" id="staticUsername" name="staticUsername" value="{{this.username}}">
+            </div>
 
-          <label for="staticStatus" class="col-sm-4 col-form-label"><strong>Status</strong></label>
-          <div class="col-sm-8">
-            <input type="text" readonly class="form-control" id="staticStatus" value="{{this.status}}">
-          </div>
+            <label for="staticStatus" class="col-sm-4 col-form-label"><strong>Status</strong></label>
+            <div class="col-sm-8">
+              <input type="text" readonly class="form-control" id="staticStatus" name="staticStatus" value="{{this.status}}">
+            </div>
 
-          <label for="staticRegisterDate" class="col-sm-4 col-form-label"><strong>Register date</strong></label>
-          <div class="col-sm-8">
-            <input type="text" readonly class="form-control" id="staticRegisterDate" value="{{this.registerDate}}">
-          </div>
-          <input type="hidden" name="password" id="password" value="{{this.password}}">
-        {{/each}}
+            <label for="staticRegisterDate" class="col-sm-4 col-form-label"><strong>Register date</strong></label>
+            <div class="col-sm-8">
+              <input type="text" readonly class="form-control" id="staticRegisterDate" name="staticRegisterDate" value="{{this.registerDate}}">
+            </div>
+            <label for="staticLastEdit" class="col-sm-4 col-form-label"><strong>Last update</strong></label>
+            <div class="col-sm-8">
+              <input type="text" readonly class="form-control" id="staticLastEdit" name="staticLastEdit" value="{{this.lastEdit}}">
+            </div>
+            <input type="hidden" name="staticPassword" id="staticPassword" value="{{this.password}}">
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="submit" class="btn btn-primary">Save changes</button>
       </div>
+      </form>
+        {{/each}}
     </div>
   </div>
 </div>
@@ -121,32 +146,35 @@
         </button>
       </div>
       {{# each informationOfUser}}
-      <input type="hidden" name="password" id="id" value="{{this.id}}">
-      <input type="hidden" name="email" id="email" value="{{this.email}}">
-      <input type="hidden" name="username" id="username" value="{{this.username}}">
-      <input type="hidden" name="status" id="status" value="{{this.status}}">
-      <input type="hidden" name="registerDate" id="registerDate" value="{{this.registerDate}}">
+      <form action="/editpassword/{{this.id}}" method="post" name="editpassform" onsubmit="return confirmEditPassword()">
+      <input type="hidden" name="oldpassword" id="oldpassword" value="{{this.password}}">
+      <input type="hidden" name="id2" id="id2" value="{{this.id}}">
+      <input type="hidden" name="email2" id="email2" value="{{this.email}}">
+      <input type="hidden" name="username2" id="username2" value="{{this.username}}">
+      <input type="hidden" name="status2" id="status2" value="{{this.status}}">
+      <input type="hidden" name="registerDate2" id="registerDate2" value="{{this.registerDate}}">
       <div class="modal-body form-group row">
-        <label for="staticPassword" class="col-sm-4 col-form-label"><strong>Password</strong></label>
+        {{!-- <label for="staticPassword" class="col-sm-4 col-form-label"><strong>Old Password</strong></label>
           <div class="col-sm-8">
-            <input type="password" class="form-control" id="staticPassword">
+            <input type="password" class="form-control" id="oldpassword2" name="oldpassword2">
+          </div>
+          <hr> --}}
+        <label for="newpassword2" class="col-sm-4 col-form-label"><strong>Password</strong></label>
+          <div class="col-sm-8">
+            <input type="password" class="form-control" id="newpassword2" name="newpassword2">
           </div>
 
-        <label for="staticRePassword" class="col-sm-4 col-form-label"><strong>Re-Password</strong></label>
+        <label for="newrepassword2" class="col-sm-4 col-form-label"><strong>Re-Password</strong></label>
           <div class="col-sm-8">
-            <input type="password" class="form-control" id="staticRePassword">
+            <input type="password" class="form-control" id="newrepassword2" name="newrepassword2">
           </div>
       </div>
-      {{/each}}
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="submit" class="btn btn-primary">Save changes</button>
       </div>
+      </form>
+      {{/each}}
     </div>
   </div>
 </div>
-
-{{!--  Note 
-      - User navbar tab to select edit profile data or edit password
-      - User ajax to put update for profile data or password
---}}

@@ -24,6 +24,33 @@ app.use('/api', jsonServer.router('db.json'));
 
 //end test json-server
 
+// test upload photo
+var formidable = require('formidable');
+var fs = require('fs');
+var form = new formidable.IncomingForm();
+
+app.post('/fileupload', (req, res) => {
+    form.parse(req, function (err, fields, files) {
+        var oldpath = files.filetoupload.path;
+        var newpath = __dirname + '/assets/img/movie_card/' + files.filetoupload.name;
+        fs.rename(oldpath, newpath, function (err) {
+          if (err) throw err;
+          res.write('File uploaded and moved!');
+          res.end();
+        });
+    });
+});
+
+
+app.get('/uploadpage', (req, res) => {
+    res.render('uploadpage.hbs');
+});
+
+app.post('/upload', function(req, res) {
+    res.send(req.files);
+});
+// end test upload
+
 app.get('/', (req, res) => {
     req.session.homepage = true;
     // add find information for use in modal -------------------------------------------------------------------------------
@@ -44,22 +71,34 @@ app.get('/', (req, res) => {
             informationOfUser: req.session.informationOfUser, // send informationOfUser for use in modal -------------------
             ss_homepage: req.session.homepage,
             login: req.session.alertLogin,
-            uname: req.session.uname
+            uname: req.session.uname,
+            editProfileComplete: req.session.editProfileComplete
         });
 
     });
+    req.session.editProfileComplete = false;
     req.session.homepage = false;
 });
 
 app.get('/admin', (req, res) => {
     if(req.session.loginComplete){
         req.session.homepage = true;
+        // add find information for use in modal -------------------------------------------------------------------------------
+        console.log('From server url : https://movie2see.herokuapp.com/api/user?username=' + req.session.uname);
+        request({
+            url: 'https://movie2see.herokuapp.com/api/user?username=' + req.session.uname,
+            json: true
+        }, (error, response, body) => {
+            req.session.informationOfUser = body;
+        });
+        // End of add find information for use in modal ------------------------------------------------------------------------
         request({
             url: 'https://movie2see.herokuapp.com/api/movie',
             json: true
         }, (error, response, body) => {
             res.render('adminIndex.hbs', {
                 datas: body,
+                informationOfUser: req.session.informationOfUser, // send informationOfUser for use in modal -------------------
                 ss_homepage: req.session.homepage,
                 login: req.session.alertLogin,
                 uname: req.session.uname
@@ -78,8 +117,10 @@ app.get('/login', (req, res) => {
     res.render('login.hbs', {
         regisComplete: req.session.regisComplete,
         loginIncorrect: req.session.loginIncorrect,
-        plslogin: req.session.plsLogin
+        plslogin: req.session.plsLogin,
+        editProfileComplete: req.session.editProfileComplete
     });
+    req.session.editProfileComplete = null;
     req.session.plsLogin = null;
     req.session.loginIncorrect = null;
     req.session.regisComplete = null;
@@ -131,7 +172,8 @@ app.post('/registoDB', (req, res) => {
             username: req.body.uname,
             password: password,
             status: "user",
-            registerDate: dateTime
+            registerDate: dateTime,
+            lastEdit: dateTime
         } },
         function (error, response, body) {
             if (response.statusCode == "201") {
@@ -272,7 +314,52 @@ app.get('/seemovie/:id', (req, res) => {
     }
 });
 
+app.post('/editprofile/:id', (req, res) => {
+    var dateTime = date.format('MMMM Do YYYY, h:mm:ss a');
+    request.put(
+        'https://movie2see.herokuapp.com/api/user/'+req.params.id,
+        { json: { 
+            id: req.body.staticID,
+            email: req.body.staticEmail,
+            username: req.body.staticUsername,
+            password: req.body.staticPassword, 
+            status: req.body.staticStatus,
+            registerDate: req.body.staticRegisterDate,
+            lastEdit: dateTime
+        } },
+        function (error, response, body) {
+            console.log(response.statusCode);
+            if (response.statusCode == "200") {
+                req.session.editProfileComplete = true;
+                res.redirect('/login');
+            }
+        }
+    );
+});
 
+app.post('/editpassword/:id', (req, res) => {
+    var password = passwordHash.generate(req.body.newpassword2);
+    var dateTime = date.format('MMMM Do YYYY, h:mm:ss a');
+    request.put(
+        'https://movie2see.herokuapp.com/api/user/'+req.params.id,
+        { json: { 
+            id: req.body.id2,
+            email: req.body.email2,
+            username: req.body.username2,
+            password: password, 
+            status: req.body.status2,
+            registerDate: req.body.registerDate2,
+            lastEdit: dateTime
+        } },
+        function (error, response, body) {
+            console.log(response.statusCode);
+            if (response.statusCode == "200") {
+                req.session.editProfileComplete = true;
+                res.redirect('/login');
+            }
+        }
+    );
+});
 
 //--------------------------- Admin -----------------------------------------------------------------
 app.get('/addmovie', (req, res) => {

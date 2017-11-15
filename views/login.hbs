@@ -46,6 +46,14 @@
                         Please login !!!
                     </div>
                 {{/if}}
+
+
+                {{# if editProfileComplete}}
+                    <div class="alert alert-danger" role="alert">
+                        Edit profile complete, Please login again.
+                    </div>
+                {{/if}}
+
                 <form action="/checklogin" method="post">
                     <div class="input-group">
                         <span class="input-group-addon" id="basic-addon1">
