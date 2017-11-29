@@ -2,16 +2,18 @@
 
 movie2see is a website to watch online movies.
 
-Go to website >> https://movie2see.herokuapp.com/
+Go to website >> https://node-movie2see.herokuapp.com/
 
 Package/module required
 
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
     "express-session": "^1.15.6",
+    "formidable": "^1.1.1",
     "hbs": "^4.0.1",
     "json-server": "^0.12.0",
     "moment": "^2.19.1",
+    "multer": "^1.3.0",
     "password-hash": "^1.2.2"
     
 You can get by open Power shell or CMD on home directory and run command (home directory is __directory\movie2see)
@@ -31,4 +33,4 @@ ID for test our website
 - Admin --> UID: admin, Pass: asdfasdf
 - User  --> UID: user, Pass: asdfasdf
     
-Developed by Suphachok Noopan 5730211009
+Developed by Suphachok Noopan 5730211009 and Thunyatorn Pratheep 5730211068
