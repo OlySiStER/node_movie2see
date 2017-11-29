@@ -18,7 +18,7 @@ Package/module required
     
 You can get by open Power shell or CMD on home directory and run command (home directory is __directory\movie2see)
   - npm i -g json-server
-  - npm i --save body-parser express express-session hbs password-hash
+  - npm install --save
     
 How to use?
 1. Open Power shell or CMD on home directory and run command "json-server --watch db.json"
