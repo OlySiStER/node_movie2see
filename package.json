@@ -24,7 +24,6 @@
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
     "express-session": "^1.15.6",
-    "firebase": "^4.6.2",
     "formidable": "^1.1.1",
     "hbs": "^4.0.1",
     "json-server": "^0.12.0",
