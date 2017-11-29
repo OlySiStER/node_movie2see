@@ -27,16 +27,16 @@ app.use('/api', jsonServer.router('db.json'));
 app.get('/', (req, res) => {
     req.session.homepage = true;
     // add find information for use in modal -------------------------------------------------------------------------------
-    console.log('From server url : https://movie2see.herokuapp.com/api/user?username=' + req.session.uname);
+    console.log('From server url : https://node-movie2see.herokuapp.com/api/user?username=' + req.session.uname);
     request({
-        url: 'https://movie2see.herokuapp.com/api/user?username=' + req.session.uname,
+        url: 'https://node-movie2see.herokuapp.com/api/user?username=' + req.session.uname,
         json: true
     }, (error, response, body) => {
         req.session.informationOfUser = body;
     });
     // End of add find information for use in modal ------------------------------------------------------------------------
     request({
-        url: 'https://movie2see.herokuapp.com/api/movie',
+        url: 'https://node-movie2see.herokuapp.com/api/movie',
         json: true
     }, (error, response, body) => {
         res.render('index.hbs', {
@@ -54,19 +54,19 @@ app.get('/', (req, res) => {
 });
 
 app.get('/admin', (req, res) => {
-    if(req.session.loginComplete){
+    if (req.session.loginComplete) {
         req.session.homepage = true;
         // add find information for use in modal -------------------------------------------------------------------------------
-        console.log('From server url : https://movie2see.herokuapp.com/api/user?username=' + req.session.uname);
+        console.log('From server url : https://node-movie2see.herokuapp.com/api/user?username=' + req.session.uname);
         request({
-            url: 'https://movie2see.herokuapp.com/api/user?username=' + req.session.uname,
+            url: 'https://node-movie2see.herokuapp.com/api/user?username=' + req.session.uname,
             json: true
         }, (error, response, body) => {
             req.session.informationOfUser = body;
         });
         // End of add find information for use in modal ------------------------------------------------------------------------
         request({
-            url: 'https://movie2see.herokuapp.com/api/movie',
+            url: 'https://node-movie2see.herokuapp.com/api/movie',
             json: true
         }, (error, response, body) => {
             res.render('adminIndex.hbs', {
@@ -76,14 +76,14 @@ app.get('/admin', (req, res) => {
                 login: req.session.alertLogin,
                 uname: req.session.uname
             });
-    
+
         });
         req.session.homepage = false;
-    }else{
+    } else {
         req.session.plsLogin = true;
         res.redirect('/login');
     }
-    
+
 });
 
 app.get('/login', (req, res) => {
@@ -101,31 +101,31 @@ app.get('/login', (req, res) => {
 
 app.post('/checklogin', (req, res) => {
     request({
-        url: 'https://movie2see.herokuapp.com/api/user?username='+req.body.uname,
+        url: 'https://node-movie2see.herokuapp.com/api/user?username=' + req.body.uname,
         json: true
     }, (error, response, body) => {
-            if(body.length != 0){
-                var chkPass = passwordHash.verify(req.body.password, body[0].password);
-                if (chkPass) {
-                    req.session.alertLogin = true;
-                    req.session.uname = req.body.uname;
-                    req.session.loginComplete = true;
-                    if(body[0].status=="admin"){
-                        res.redirect('/admin');
-                    }else{
-                        res.redirect('/');
-                    }
-                    
+        if (body.length != 0) {
+            var chkPass = passwordHash.verify(req.body.password, body[0].password);
+            if (chkPass) {
+                req.session.alertLogin = true;
+                req.session.uname = req.body.uname;
+                req.session.loginComplete = true;
+                if (body[0].status == "admin") {
+                    res.redirect('/admin');
                 } else {
-                    req.session.loginIncorrect = true;
-                    req.session.alertLogin = false;
-                    res.redirect('/login');
+                    res.redirect('/');
                 }
-            }else{
+
+            } else {
                 req.session.loginIncorrect = true;
                 req.session.alertLogin = false;
                 res.redirect('/login');
             }
+        } else {
+            req.session.loginIncorrect = true;
+            req.session.alertLogin = false;
+            res.redirect('/login');
+        }
 
     });
 });
@@ -138,17 +138,18 @@ app.post('/registoDB', (req, res) => {
     var password = passwordHash.generate(req.body.password);
     var dateTime = date.format('MMMM Do YYYY, h:mm:ss a');
     request.post(
-        'https://movie2see.herokuapp.com/api/user',
-        { json: { 
-            id: null,
-            email: req.body.email,
-            username: req.body.uname,
-            password: password,
-            status: "user",
-            registerDate: dateTime,
-            lastEdit: dateTime
-        } },
-        function (error, response, body) {
+        'https://node-movie2see.herokuapp.com/api/user', {
+            json: {
+                id: null,
+                email: req.body.email,
+                username: req.body.uname,
+                password: password,
+                status: "user",
+                registerDate: dateTime,
+                lastEdit: dateTime
+            }
+        },
+        function(error, response, body) {
             if (response.statusCode == "201") {
                 req.session.regisComplete = true;
                 res.redirect('login');
@@ -169,9 +170,9 @@ app.get('/thaimovie', (req, res) => {
     req.session.cartoon = false;
 
     // add find information for use in modal -------------------------------------------------------------------------------
-    console.log('From server url : https://movie2see.herokuapp.com/api/user?username=' + req.session.uname);
+    console.log('From server url : https://node-movie2see.herokuapp.com/api/user?username=' + req.session.uname);
     request({
-        url: 'https://movie2see.herokuapp.com/api/user?username=' + req.session.uname,
+        url: 'https://node-movie2see.herokuapp.com/api/user?username=' + req.session.uname,
         json: true
     }, (error, response, body) => {
         req.session.informationOfUser = body;
@@ -179,7 +180,7 @@ app.get('/thaimovie', (req, res) => {
     // End of add find information for use in modal ------------------------------------------------------------------------
 
     request({
-        url: 'https://movie2see.herokuapp.com/api/movie/?type=thaimovie',
+        url: 'https://node-movie2see.herokuapp.com/api/movie/?type=thaimovie',
         json: true
     }, (error, response, body) => {
         res.render('thaimovie.hbs', {
@@ -200,9 +201,9 @@ app.get('/othermovie', (req, res) => {
     req.session.cartoon = false;
 
     // add find information for use in modal -------------------------------------------------------------------------------
-    console.log('From server url : https://movie2see.herokuapp.com/api/user?username=' + req.session.uname);
+    console.log('From server url : https://node-movie2see.herokuapp.com/api/user?username=' + req.session.uname);
     request({
-        url: 'https://movie2see.herokuapp.com/api/user?username=' + req.session.uname,
+        url: 'https://node-movie2see.herokuapp.com/api/user?username=' + req.session.uname,
         json: true
     }, (error, response, body) => {
         req.session.informationOfUser = body;
@@ -210,7 +211,7 @@ app.get('/othermovie', (req, res) => {
     // End of add find information for use in modal ------------------------------------------------------------------------
 
     request({
-        url: 'https://movie2see.herokuapp.com/api/movie/?type=othermovie',
+        url: 'https://node-movie2see.herokuapp.com/api/movie/?type=othermovie',
         json: true
     }, (error, response, body) => {
         res.render('thaimovie.hbs', {
@@ -228,9 +229,9 @@ app.get('/othermovie', (req, res) => {
 app.get('/cartoon', (req, res) => {
 
     // add find information for use in modal -------------------------------------------------------------------------------
-    console.log('From server url : https://movie2see.herokuapp.com/api/user?username=' + req.session.uname);
+    console.log('From server url : https://node-movie2see.herokuapp.com/api/user?username=' + req.session.uname);
     request({
-        url: 'https://movie2see.herokuapp.com/api/user?username=' + req.session.uname,
+        url: 'https://node-movie2see.herokuapp.com/api/user?username=' + req.session.uname,
         json: true
     }, (error, response, body) => {
         req.session.informationOfUser = body;
@@ -242,7 +243,7 @@ app.get('/cartoon', (req, res) => {
     req.session.cartoon = true;
 
     request({
-        url: 'https://movie2see.herokuapp.com/api/movie/?type=cartoon',
+        url: 'https://node-movie2see.herokuapp.com/api/movie/?type=cartoon',
         json: true
     }, (error, response, body) => {
         res.render('thaimovie.hbs', {
@@ -260,28 +261,28 @@ app.get('/cartoon', (req, res) => {
 app.get('/seemovie/:id', (req, res) => {
 
     // add find information for use in modal -------------------------------------------------------------------------------
-    console.log('From server url : https://movie2see.herokuapp.com/api/user?username=' + req.session.uname);
+    console.log('From server url : https://node-movie2see.herokuapp.com/api/user?username=' + req.session.uname);
     request({
-        url: 'https://movie2see.herokuapp.com/api/user?username=' + req.session.uname,
+        url: 'https://node-movie2see.herokuapp.com/api/user?username=' + req.session.uname,
         json: true
     }, (error, response, body) => {
         req.session.informationOfUser = body;
     });
     // End of add find information for use in modal ------------------------------------------------------------------------
 
-    if(req.session.loginComplete){
+    if (req.session.loginComplete) {
         request({
-            url: 'https://movie2see.herokuapp.com/api/movie/'+req.params.id,
+            url: 'https://node-movie2see.herokuapp.com/api/movie/' + req.params.id,
             json: true
         }, (error, response, body) => {
-            res.render('seemovie.hbs',{
+            res.render('seemovie.hbs', {
                 informationmovie: body,
                 informationOfUser: req.session.informationOfUser, // send informationOfUser for use in modal -------------------
                 login: req.session.alertLogin,
                 uname: req.session.uname
             });
         });
-    }else{
+    } else {
         req.session.plsLogin = true;
         res.redirect('/login');
     }
@@ -290,17 +291,18 @@ app.get('/seemovie/:id', (req, res) => {
 app.post('/editprofile/:id', (req, res) => {
     var dateTime = date.format('MMMM Do YYYY, h:mm:ss a');
     request.put(
-        'https://movie2see.herokuapp.com/api/user/'+req.params.id,
-        { json: { 
-            id: req.body.staticID,
-            email: req.body.staticEmail,
-            username: req.body.staticUsername,
-            password: req.body.staticPassword, 
-            status: req.body.staticStatus,
-            registerDate: req.body.staticRegisterDate,
-            lastEdit: dateTime
-        } },
-        function (error, response, body) {
+        'https://node-movie2see.herokuapp.com/api/user/' + req.params.id, {
+            json: {
+                id: req.body.staticID,
+                email: req.body.staticEmail,
+                username: req.body.staticUsername,
+                password: req.body.staticPassword,
+                status: req.body.staticStatus,
+                registerDate: req.body.staticRegisterDate,
+                lastEdit: dateTime
+            }
+        },
+        function(error, response, body) {
             console.log(response.statusCode);
             if (response.statusCode == "200") {
                 req.session.editProfileComplete = true;
@@ -314,17 +316,18 @@ app.post('/editpassword/:id', (req, res) => {
     var password = passwordHash.generate(req.body.newpassword2);
     var dateTime = date.format('MMMM Do YYYY, h:mm:ss a');
     request.put(
-        'https://movie2see.herokuapp.com/api/user/'+req.params.id,
-        { json: { 
-            id: req.body.id2,
-            email: req.body.email2,
-            username: req.body.username2,
-            password: password, 
-            status: req.body.status2,
-            registerDate: req.body.registerDate2,
-            lastEdit: dateTime
-        } },
-        function (error, response, body) {
+        'https://node-movie2see.herokuapp.com/api/user/' + req.params.id, {
+            json: {
+                id: req.body.id2,
+                email: req.body.email2,
+                username: req.body.username2,
+                password: password,
+                status: req.body.status2,
+                registerDate: req.body.registerDate2,
+                lastEdit: dateTime
+            }
+        },
+        function(error, response, body) {
             console.log(response.statusCode);
             if (response.statusCode == "200") {
                 req.session.editProfileComplete = true;
@@ -341,14 +344,14 @@ var fs = require('fs');
 var form = new formidable.IncomingForm();
 
 app.post('/fileupload', (req, res) => {
-    form.parse(req, function (err, fields, files) {
+    form.parse(req, function(err, fields, files) {
         var oldpath = files.filetoupload.path;
         var newpath = __dirname + '/assets/img/movie_card/' + files.filetoupload.name;
-        fs.rename(oldpath, newpath, function (err) {
-          if (err) throw err;
-          req.session.ss_uploadPicComplete = true;
-          console.log(req.session.ss_uploadPicComplete);
-          res.redirect('/uploadpage');
+        fs.rename(oldpath, newpath, function(err) {
+            if (err) throw err;
+            req.session.ss_uploadPicComplete = true;
+            console.log(req.session.ss_uploadPicComplete);
+            res.redirect('/uploadpage');
         });
     });
 });
@@ -359,7 +362,7 @@ app.post('/upload', function(req, res) {
 // end test upload
 
 app.get('/addmovie', (req, res) => {
-    if(req.session.loginComplete){
+    if (req.session.loginComplete) {
         req.session.ss_addmovie = true;
         req.session.ss_showlistmovie = false;
         req.session.alertLogin = true;
@@ -372,7 +375,7 @@ app.get('/addmovie', (req, res) => {
             uname: req.session.uname
         });
         req.session.addmoviecomplete = false;
-    }else{
+    } else {
         req.session.plsLogin = true;
         res.redirect('/login');
     }
@@ -381,20 +384,21 @@ app.get('/addmovie', (req, res) => {
 app.post('/addmovietodb', (req, res) => {
     var dateTime = date.format('MMMM Do YYYY, h:mm:ss a');
     request.post(
-        'https://movie2see.herokuapp.com/api/movie',
-        { json: { 
-            id: null,
-            title: req.body.title,
-            img: req.body.image,
-            year: req.body.year,
-            type: req.body.type,
-            detail: req.body.detail,
-            trailer: req.body.trailer,
-            movieLink: req.body.movieLink,
-            createMovieDate: dateTime,
-            lastEdit: dateTime
-        } },
-        function (error, response, body) {
+        'https://node-movie2see.herokuapp.com/api/movie', {
+            json: {
+                id: null,
+                title: req.body.title,
+                img: req.body.image,
+                year: req.body.year,
+                type: req.body.type,
+                detail: req.body.detail,
+                trailer: req.body.trailer,
+                movieLink: req.body.movieLink,
+                createMovieDate: dateTime,
+                lastEdit: dateTime
+            }
+        },
+        function(error, response, body) {
             if (response.statusCode == "201") {
                 req.session.addmoviecomplete = true;
                 res.redirect('/addmovie');
@@ -405,11 +409,11 @@ app.post('/addmovietodb', (req, res) => {
 
 app.get('/getinformation/:id', (req, res) => {
     request({
-        url: 'https://movie2see.herokuapp.com/api/movie/'+req.params.id,
+        url: 'https://node-movie2see.herokuapp.com/api/movie/' + req.params.id,
         json: true
     }, (error, response, body) => {
         req.session.alertLogin = true;
-        res.render('showinformationmovie.hbs',{
+        res.render('showinformationmovie.hbs', {
             informationmovie: body,
             login: req.session.alertLogin,
             uname: req.session.uname
@@ -418,7 +422,7 @@ app.get('/getinformation/:id', (req, res) => {
 });
 
 app.get('/myprofile', (req, res) => {
-    res.render('myprofile.hbs',{
+    res.render('myprofile.hbs', {
         login: req.session.alertLogin,
         uname: req.session.uname
     });
@@ -429,18 +433,18 @@ app.get('/editmovieform/:id', (req, res) => {
     req.session.othermovie = false;
     req.session.cartoon = false;
     request({
-        url: 'https://movie2see.herokuapp.com/api/movie/'+req.params.id,
+        url: 'https://node-movie2see.herokuapp.com/api/movie/' + req.params.id,
         json: true
     }, (error, response, body) => {
-        if (body.type == "thaimovie"){
+        if (body.type == "thaimovie") {
             req.session.thaimovie = true
-        }else if (body.type == "othermovie"){
+        } else if (body.type == "othermovie") {
             req.session.othermovie = true
-        }else if (body.type == "cartoon"){
+        } else if (body.type == "cartoon") {
             req.session.cartoon = true
         }
         req.session.alertLogin = true;
-        res.render('editmovieform.hbs',{
+        res.render('editmovieform.hbs', {
             informationmovie: body,
             ss_type_thaimovie: req.session.thaimovie,
             ss_type_othermovie: req.session.othermovie,
@@ -454,21 +458,22 @@ app.get('/editmovieform/:id', (req, res) => {
 app.post('/editmovie/:id', (req, res) => {
     var dateTime = date.format('MMMM Do YYYY, h:mm:ss a');
     request.put(
-        'https://movie2see.herokuapp.com/api/movie/'+req.params.id,
-        { json: { 
-            
-            title: req.body.title,
-            img: req.body.image,
-            year: req.body.year,
-            type: req.body.type,
-            detail: req.body.detail,
-            trailer: req.body.trailer,
-            movieLink: req.body.movieLink,
-            createMovieDate: req.body.createMovieDate,
-            lastEdit: dateTime,
-            id: req.body.id
-        } },
-        function (error, response, body) {
+        'https://node-movie2see.herokuapp.com/api/movie/' + req.params.id, {
+            json: {
+
+                title: req.body.title,
+                img: req.body.image,
+                year: req.body.year,
+                type: req.body.type,
+                detail: req.body.detail,
+                trailer: req.body.trailer,
+                movieLink: req.body.movieLink,
+                createMovieDate: req.body.createMovieDate,
+                lastEdit: dateTime,
+                id: req.body.id
+            }
+        },
+        function(error, response, body) {
             if (response.statusCode == "200") {
                 res.redirect('/showlistmovie');
             }
@@ -478,18 +483,18 @@ app.post('/editmovie/:id', (req, res) => {
 
 app.get('/delete/:id', (req, res) => {
     request.delete(
-        'https://movie2see.herokuapp.com/api/movie/'+req.params.id,
-        
-        function (error, response, body) {
+        'https://node-movie2see.herokuapp.com/api/movie/' + req.params.id,
+
+        function(error, response, body) {
             res.redirect('/showlistmovie');
         }
     );
 });
 
 app.get('/showlistmovie', (req, res) => {
-    if(req.session.loginComplete){
+    if (req.session.loginComplete) {
         request({
-            url: 'https://movie2see.herokuapp.com/api/movie',
+            url: 'https://node-movie2see.herokuapp.com/api/movie',
             json: true
         }, (error, response, body) => {
             req.session.ss_addmovie = false;
@@ -505,16 +510,16 @@ app.get('/showlistmovie', (req, res) => {
                 uname: req.session.uname
             });
         });
-    }else{
+    } else {
         req.session.plsLogin = true;
         res.redirect('/login');
     }
 });
 
 app.get('/uploadpage', (req, res) => {
-    if(req.session.loginComplete){
+    if (req.session.loginComplete) {
         request({
-            url: 'https://movie2see.herokuapp.com/api/movie',
+            url: 'https://node-movie2see.herokuapp.com/api/movie',
             json: true
         }, (error, response, body) => {
             req.session.ss_addmovie = false;
@@ -534,7 +539,7 @@ app.get('/uploadpage', (req, res) => {
             });
             req.session.ss_uploadPicComplete = false;
         });
-    }else{
+    } else {
         req.session.plsLogin = true;
         res.redirect('/login');
     }
@@ -545,5 +550,5 @@ app.get('/getDateTime', (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Server is up on ${port}`);
+    console.log(`Server is up on ${port}`);
 });
