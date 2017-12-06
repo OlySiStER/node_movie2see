@@ -1,8 +1,10 @@
 # movie2see
 
+# This site is for educational purposes only.
+
 movie2see is a website to watch online movies.
 
-Go to website >> https://node-movie2see.herokuapp.com/
+Go to website >> http://movie2see.eu-4.evennode.com/
 
 Package/module required
 
