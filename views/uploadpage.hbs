@@ -6,6 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>ADMIN | Add movie</title>
+    <script
+			  src="https://code.jquery.com/jquery-3.2.1.js"
+			  integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+			  crossorigin="anonymous"></script>
+    <script src="http://malsup.github.com/jquery.form.js"></script> 
     <link rel="shortcut icon" href="/img/icon.png" />
     <link rel="stylesheet" href="/css/bootstrap.css">
     <link rel="stylesheet" href="/css/main.css">
@@ -26,21 +31,50 @@
         <br>
         <br>
         <br>
-        <form action="/fileupload" method="post" enctype="multipart/form-data">
+        {{!-- <form action="/fileupload" method="post" enctype="multipart/form-data">
             <input type="file" name="filetoupload" class="form-control">
             <br>
             <center>
                 <input type="submit" value="Upload" class="btn btn-primary">
             </center>
-        </form>
-        <small id="emailHelp" class="form-text text-muted">
+        </form> --}}
+        <form id="frmUploader" enctype="multipart/form-data" action="api/Upload/" method="post"> 
+            <input type="file" name="imgUploader" multiple /> 
+            <input type="submit" name="submit" id="btnSubmit" value="Upload" /> 
+        </form> 
+        <small id="infoHelp" class="form-text text-muted">
             <center>
                 <font style="color:red;">Please upload Image_card.jpg that same name with movie Image_card.jpg</font>
             </center>
         </small>
     </div>
     <br> {{> footfixbottom}}
-
+    <script> 
+        $(document).ready(function () { 
+            var options = { 
+                beforeSubmit: showRequest,  // pre-submit callback 
+                success: showResponse  // post-submit callback 
+            }; 
+  
+            // bind to the form's submit event 
+            $('#frmUploader').submit(function () { 
+                $(this).ajaxSubmit(options); 
+                // always return false to prevent standard browser submit and page navigation 
+                return false; 
+            }); 
+        }); 
+  
+        // pre-submit callback 
+        function showRequest(formData, jqForm, options) { 
+            alert('Uploading is starting.'); 
+            return true; 
+        } 
+  
+        // post-submit callback 
+        function showResponse(responseText, statusText, xhr, $form) { 
+            alert('status: ' + statusText + '\n\nresponseText: \n' + responseText ); 
+        } 
+    </script>
 </body>
 
 </html>
